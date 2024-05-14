@@ -1,0 +1,111 @@
+swagger: "2.0"
+info:
+  description: 'This is a sample server Petstore server.  You can find out more about Swagger at <a href="http://swagger.io">http://swagger.io</a> or on irc.freenode.net, #swagger.  For this sample, you can use the api key "special-key" to test the authorization filters'
+  version: 1.0.0
+  title: Swagger Petstore YAML
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+# basePath: /v2
+tags:
+  - name: auth
+    description: Authentication for user
+  # - name: store
+  #   description: Operations about user
+  # - name: user
+  #   description: Access to Petstore orders
+  #   externalDocs:
+  #     description: Find out more about our store
+  #     url: "http://swagger.io"
+paths:
+  "/auth/login":
+    post:
+      tags:
+        - auth
+      summary: Login for User
+      description: ""
+      operationId: loginUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserLogin"
+      responses:
+        "200":
+          description: Sent e-mail verification
+  "/auth/send-otp/{email}":
+    get:
+      tags:
+        - auth
+      summary: Send OTP in to e-mail of user
+      description: ""
+      parameters:
+        - name: email
+          in: path
+          description: Email of user
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Sent e-mail verification
+  "/auth/verify/{email}":
+    post:
+      tags:
+        - auth
+      summary: Verify user e-mail
+      description: ""
+      parameters:
+        - name: email
+          in: path
+          description: Email of user
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/VerifyEmail"
+      responses:
+        "200":
+          description: Verified E-mail successfully
+  "/user/password/":
+    put:
+        tags:
+          - user
+        summary: Set initial password
+        description: ""
+        produces:
+        - application/json
+        parameters:
+          - in: body
+            name: body
+            required: true
+            schema:
+              $ref: "#/definitions/SetPassword"
+        responses:
+          "200":
+            description: Your Password was set
+definitions:
+  UserLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  VerifyEmail:
+    properties:
+      OTP:
+        type: string
+  SetPassword:
+    properties:
+      token:
+        type: string
+      password:
+        type: string
+
