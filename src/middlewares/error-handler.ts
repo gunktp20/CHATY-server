@@ -7,7 +7,7 @@ const errorHandlerMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(err)
+  console.log("ERR", err);
   const defaultError = {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg:

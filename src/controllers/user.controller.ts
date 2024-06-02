@@ -6,13 +6,28 @@ import User from "../models/User";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+const API_DOMAIN = "http://localhost:5000s";
+
 interface IJwtPayload extends JwtPayload {
   email: string;
 }
 
+const getAllUser = async (req: Request, res: Response) => {
+  const users = await User.find();
+  res.status(StatusCodes.OK).json(users);
+};
+
 const getUserInfo = async (req: Request, res: Response) => {
   const userInfo = await User.findById(req.user?.userId);
   res.status(StatusCodes.OK).json(userInfo);
+};
+
+const getRecipeintInfo = async (req: Request, res: Response) => {
+  const recipeintInfo = await User.findById(req.params.id);
+  if (!recipeintInfo) {
+    throw new BadRequestError("Not found your recipeint id");
+  }
+  res.status(StatusCodes.OK).json(recipeintInfo);
 };
 
 const uploadImage = async (req: Request, res: Response) => {
@@ -66,4 +81,4 @@ const setPassword = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({ user, accessToken, refreshToken });
 };
 
-export { setPassword, uploadImage, getUserInfo };
+export { setPassword, uploadImage, getUserInfo, getRecipeintInfo, getAllUser };

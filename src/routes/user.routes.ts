@@ -3,6 +3,8 @@ import {
   setPassword,
   uploadImage,
   getUserInfo,
+  getRecipeintInfo,
+  getAllUser,
 } from "../controllers/user.controller";
 import multer from "multer";
 import path from "path";
@@ -47,8 +49,10 @@ const imageUpload = multer({
   },
 });
 
+router.route("/").get(getAllUser);
 router.route("/password").put(setPassword);
-router.route("/info").get(authJwtMiddleware,getUserInfo);
+router.route("/info/:id").get(getRecipeintInfo);
+router.route("/info").get(authJwtMiddleware, getUserInfo);
 router
   .route("/upload-profile-img")
   .post(authJwtMiddleware, imageUpload.single("profile"), uploadImage);

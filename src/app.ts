@@ -2,6 +2,8 @@ import notFoundMiddleware from "./middlewares/not-found";
 import errorHandlerMiddleware from "./middlewares/error-handler";
 import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
+import chatRouter from "./routes/chat.routes";
+import messageRouter from "./routes/message.routes";
 import express from "express";
 import connectDB from "./db/connect";
 import logger from "./utils/logger";
@@ -13,7 +15,6 @@ import fs from "fs";
 import YAML from "yaml";
 const file = fs.readFileSync(`${__dirname}/documents/swagger.yaml`, "utf8");
 const file2 = fs.readFileSync(`${__dirname}/documents/petSwagger.yaml`, "utf8");
-5;
 const swaggerDocument = YAML.parse(file);
 const swaggerDocument2 = YAML.parse(file2);
 
@@ -42,6 +43,8 @@ const MONGO_URL = process.env.MONGO_URL as string;
 
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
+app.use("/chat", chatRouter);
+app.use("/message", messageRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

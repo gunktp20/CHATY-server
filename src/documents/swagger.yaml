@@ -76,21 +76,55 @@ paths:
           description: Verified E-mail successfully
   "/user/password/":
     put:
-        tags:
-          - user
-        summary: Set initial password
-        description: ""
-        produces:
+      tags:
+        - user
+      summary: Set initial password
+      description: ""
+      produces:
         - application/json
-        parameters:
-          - in: body
-            name: body
-            required: true
-            schema:
-              $ref: "#/definitions/SetPassword"
-        responses:
-          "200":
-            description: Your Password was set
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/SetPassword"
+      responses:
+        "200":
+          description: Your Password was set
+  "/chat/{userId}":
+    get:
+      tags:
+        - chat
+      summary: get all chat
+      description: "get all chat of user by user id"
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: id of user
+          required: true
+          type: string
+      responses:
+        "200":
+          description: all user chats
+  "/chat/checkUnread/{userId}":
+    get:
+      tags:
+        - chat
+      summary: check unread chat
+      description: "get all unread chat if user has"
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: id of user
+          required: true
+          type: string
+      responses:
+        "200":
+          description: all user unread chats
 definitions:
   UserLogin:
     properties:
@@ -108,4 +142,3 @@ definitions:
         type: string
       password:
         type: string
-
